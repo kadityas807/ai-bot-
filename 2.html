@@ -309,12 +309,12 @@
       }
     }
     
-    #pageHome .dashboard-layout .action-tile:nth-of-type(1) { animation-delay: 0.2s; }
-    #pageHome .dashboard-layout .action-tile:nth-of-type(2) { animation-delay: 0.3s; }
-    #pageHome .dashboard-layout .action-tile:nth-of-type(3) { animation-delay: 0.4s; }
-    #pageHome .dashboard-layout .action-tile:nth-of-type(4) { animation-delay: 0.5s; }
-    #pageHome .dashboard-layout .action-tile:nth-of-type(5) { animation-delay: 0.6s; }
-    #pageHome .dashboard-layout .action-tile:nth-of-type(6) { animation-delay: 0.7s; }
+    /* Animation delays for remaining tiles */
+    #pageHome .dashboard-layout .action-tile:nth-of-type(1) { animation-delay: 0.3s; }
+    #pageHome .dashboard-layout .action-tile:nth-of-type(2) { animation-delay: 0.4s; }
+    #pageHome .dashboard-layout .action-tile:nth-of-type(3) { animation-delay: 0.5s; }
+    #pageHome .dashboard-layout .action-tile:nth-of-type(4) { animation-delay: 0.6s; }
+    #pageHome .dashboard-layout .action-tile:nth-of-type(5) { animation-delay: 0.7s; }
 
 
     .action-tile:hover {
@@ -329,6 +329,84 @@
       margin-bottom: 1rem;
     }
     .action-tile h3 { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; }
+
+    /* New styles for the highlighted AI Symptom Checker card */
+    .ai-symptom-card {
+        background: linear-gradient(135deg, var(--primary-green), #1d8060);
+        color: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        box-shadow: var(--shadow-md);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: tile-reveal 0.6s ease-out forwards 0.2s; /* Delayed reveal */
+        border: 1px solid var(--primary-green-dark);
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    .ai-symptom-card .card-icon-bg {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .ai-symptom-card .card-icon-bg svg {
+        width: 48px;
+        height: 48px;
+        stroke: white;
+    }
+    .ai-symptom-card .card-content {
+        flex-grow: 1;
+    }
+    .ai-symptom-card h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .ai-symptom-card p {
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 600px;
+    }
+    .ai-symptom-card .btn-lg {
+        padding: 0.9rem 1.8rem;
+        font-size: 1.1rem;
+        margin-left: auto;
+        animation: button-pulse 2s infinite;
+        background-color: white;
+        color: var(--primary-green);
+        border: none;
+    }
+    .ai-symptom-card .btn-lg:hover {
+        background-color: #f0f0f0;
+    }
+
+
+    @keyframes button-pulse {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    /* Responsive adjustments for the new card */
+    @media (max-width: 768px) {
+        .ai-symptom-card {
+            flex-direction: column;
+            text-align: center;
+            gap: 1rem;
+        }
+        .ai-symptom-card .btn-lg {
+            margin-left: 0;
+            margin-top: 1rem;
+            width: 100%;
+        }
+    }
 
     /* Info Section Styles */
     .info-section {
@@ -581,6 +659,84 @@
     .nutrition-item:last-child { border-bottom: none; }
     .nutrition-item strong { color: var(--text-dark); text-align: left; }
     .nutrition-item-header { font-weight: 600; color: var(--text-light); font-size: 0.8rem; }
+
+    /* Styles for new Nutrition sections */
+    .section-title {
+        font-size: 1.25rem;
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .food-chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+    }
+    .food-category h5 {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.75rem;
+    }
+    .food-category ul {
+        list-style: none;
+        padding-left: 0;
+        font-size: 0.95rem;
+    }
+    .food-category li {
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+        position: relative;
+        padding-left: 1.2rem;
+    }
+    .food-category li::before {
+        content: '•';
+        color: var(--primary-green);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+    }
+
+    /* Styles for new Specialist Finder */
+    .specialist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+    .specialist-item {
+        background: var(--card-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 600;
+    }
+    .specialist-item:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-sm);
+    }
+    .doctor-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: var(--card-bg);
+        border-radius: 8px;
+        margin-bottom: 0.75rem;
+        border: 1px solid var(--border-color);
+    }
+    #doctorListTitle {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+    }
+
+
   </style>
 </head>
 <body>
@@ -621,16 +777,22 @@
           </div>
         </div>
 
+        <div id="aiSymptomCard" class="ai-symptom-card">
+            <div class="card-icon-bg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5a2.5 2.5 0 0 1 5 0"/><path d="M6.5 6.5a2.5 2.5 0 0 1 5 0"/><path d="M12.5 6.5a2.5 2.5 0 0 1 5 0"/><path d="M9.5 10.5a2.5 2.5 0 0 1 5 0"/><path d="M6.5 14.5a2.5 2.5 0 0 1 5 0"/><path d="M12.5 14.5a2.5 2.5 0 0 1 5 0"/><path d="M9.5 18.5a2.5 2.5 0 0 1 5 0"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M2.5 9.5a2.5 2.5 0 0 1 0-5"/><path d="M2.5 14.5a2.5 2.5 0 0 0 0 5"/><path d="M21.5 9.5a2.5 2.5 0 0 0 0-5"/><path d="M21.5 14.5a2.5 2.5 0 0 1 0 5"/></svg>
+            </div>
+            <div class="card-content">
+                <h2>Your Personal AI Health Assistant</h2>
+                <p class="muted">Concerned about a symptom? Get instant, AI-powered analysis to understand potential causes and next steps.</p>
+            </div>
+            <button id="startSymptomCheckerBtn" class="btn btn-lg">Start Analysis</button>
+        </div>
+
         <div class="dashboard-layout">
-          <div id="tile-checker" class="action-tile">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 12c0-2.5-2-4.5-4.5-4.5S5.5 9.5 5.5 12s2 4.5 4.5 4.5S14.5 14.5 14.5 12z"/><path d="M12 18.5c-3.03 0-5.5-2.47-5.5-5.5 0-1.42.54-2.73 1.44-3.74"/></svg>
-            <h3>AI Symptom Checker</h3>
-            <p class="muted">Get a quick analysis of your symptoms.</p>
-          </div>
           <div id="tile-appointment" class="action-tile">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <h3>Book Appointment</h3>
-              <p class="muted">Schedule a visit with a doctor.</p>
+              <h3>Find Specialists Near You</h3>
+              <p class="muted">Find and book with top specialists.</p>
           </div>
           <div id="tile-monitor" class="action-tile">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
@@ -752,7 +914,7 @@
     </button>
   </div>
 
-  <!-- Modals and Script are unchanged -->
+  <!-- Modals -->
   <div id="symptomModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -787,22 +949,37 @@
   </div>
   <div id="appointmentModal" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Book an Appointment</h3>
-        <button class="close-btn" onclick="closeModal()">&times;</button>
-      </div>
-      <form id="appointmentForm">
-        <label for="doctorSelect">Choose a Doctor</label>
-        <select id="doctorSelect">
-          <option>Dr. Emily Carter (Cardiologist)</option>
-          <option>Dr. Ben Adams (Dermatologist)</option>
-          <option>Dr. Olivia Chen (General Physician)</option>
-        </select>
-        <label for="datePicker">Select a Date</label>
-        <input id="datePicker" type="date" required />
-        <button class="btn btn-primary">Book Now</button>
-      </form>
-      <div id="appointmentResult" style="display:none;"></div>
+        <div class="modal-header">
+            <h3 class="modal-title">Find a Specialist Near You</h3>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        
+        <!-- View 1: Specialist Selection -->
+        <div id="specialistSelection">
+            <!-- Dynamically populated -->
+        </div>
+
+        <!-- View 2: Doctor List -->
+        <div id="doctorListContainer" style="display:none;">
+            <button class="btn btn-secondary" id="backToSpecialistsBtn" style="margin-bottom: 1rem;">&larr; Back to Specializations</button>
+            <h4 id="doctorListTitle"></h4>
+            <div id="doctorList">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- View 3: Map and Availability -->
+        <div id="mapViewContainer" style="display:none;">
+            <button class="btn btn-secondary" id="backToDoctorListBtn" style="margin-bottom: 1rem;">&larr; Back to Doctor List</button>
+            <h4 id="mapViewTitle"></h4>
+            <div id="mapContainer" style="width: 100%; height: 300px; background-color: var(--border-color); border-radius: 8px; margin-bottom: 1rem;">
+                <!-- Map iframe will be inserted here -->
+            </div>
+            <p class="muted">Check the map for the clinic's location. For virtual consultations, booking is available 24/7.</p>
+            <button class="btn btn-primary" id="bookVirtualConsultationBtn" style="width: 100%;">Book Virtual Consultation</button>
+        </div>
+
+        <div id="appointmentResult" style="display:none;"></div>
     </div>
   </div>
   <div id="monitorModal" class="modal">
@@ -872,6 +1049,57 @@
         <button class="btn btn-primary" type="submit">✨ Analyze Nutrition</button>
       </form>
       <div id="nutritionResult" style="display:none;"></div>
+
+      <div class="food-chart-container" style="margin-top: 2rem;">
+        <h4 class="section-title">Reference Food Chart</h4>
+        <div class="food-chart-grid">
+            <div class="food-category">
+                <h5>Carbohydrates</h5>
+                <ul>
+                    <li>Oats</li>
+                    <li>Brown Rice</li>
+                    <li>Quinoa</li>
+                    <li>Sweet Potatoes</li>
+                    <li>Bananas</li>
+                </ul>
+            </div>
+            <div class="food-category">
+                <h5>Proteins</h5>
+                <ul>
+                    <li>Chicken Breast</li>
+                    <li>Lentils</li>
+                    <li>Eggs</li>
+                    <li>Greek Yogurt</li>
+                    <li>Almonds</li>
+                </ul>
+            </div>
+            <div class="food-category">
+                <h5>Fats</h5>
+                <ul>
+                    <li>Avocado</li>
+                    <li>Olive Oil</li>
+                    <li>Nuts & Seeds</li>
+                    <li>Fatty Fish (Salmon)</li>
+                    <li>Dark Chocolate</li>
+                </ul>
+            </div>
+        </div>
+      </div>
+
+      <div class="diet-plan-container" style="margin-top: 2rem;">
+        <h4 class="section-title">Get a Diet Recommendation</h4>
+        <form id="dietPlanForm">
+            <label for="diseaseSelect">Select a condition for a sample diet plan:</label>
+            <select id="diseaseSelect">
+                <option value="Diabetes">Diabetes</option>
+                <option value="High Blood Pressure">High Blood Pressure</option>
+                <option value="High Cholesterol">High Cholesterol</option>
+                <option value="Weight Management">Weight Management</option>
+            </select>
+            <button class="btn btn-primary" type="submit">✨ Get Diet Plan</button>
+        </form>
+        <div id="dietPlanResult" class="ai-response-card" style="display:none; margin-top: 1rem;"></div>
+      </div>
     </div>
   </div>
   <div id="toastNotification"></div>
@@ -906,23 +1134,10 @@
       const welcomeScreen = document.getElementById('welcome-animation');
       setTimeout(() => { if (welcomeScreen) { welcomeScreen.style.display = 'none'; } }, 5500); 
 
-      const backgroundCanvas = document.getElementById('background-canvas');
-      setTimeout(() => {
-          if (backgroundCanvas) {
-              backgroundCanvas.style.opacity = '0';
-          }
-      }, 4500);
-
-      setTimeout(() => {
-          if (backgroundCanvas) {
-              backgroundCanvas.style.display = 'none';
-          }
-      }, 5500);
-
       updateUIForAuthState();
       getHealthTipOfTheDay();
 
-      document.getElementById('tile-checker').addEventListener('click', () => openModal('symptomModal'));
+      document.getElementById('startSymptomCheckerBtn').addEventListener('click', () => openModal('symptomModal'));
       document.getElementById('tile-appointment').addEventListener('click', () => openModal('appointmentModal'));
       document.getElementById('tile-monitor').addEventListener('click', () => openModal('monitorModal'));
       document.getElementById('tile-meds').addEventListener('click', () => openModal('medsModal'));
@@ -930,40 +1145,10 @@
       document.getElementById('tile-nutrition').addEventListener('click', () => openModal('nutritionModal'));
     });
 
-    const canvas = document.getElementById('background-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const numParticles = 20;
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    function createParticles() {
-        particles = [];
-        for (let i = 0; i < numParticles; i++) {
-            particles.push({
-                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                radius: Math.random() * 40 + 20, speed: (Math.random() * 0.3) + 0.1,
-                opacity: Math.random() * 0.2 + 0.05
-            });
-        }
-    }
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.y -= p.speed;
-            if (p.y + p.radius < 0) { p.y = canvas.height + p.radius; p.x = Math.random() * canvas.width; }
-            const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-            gradient.addColorStop(0, `rgba(45, 156, 120, ${p.opacity})`);
-            gradient.addColorStop(1, 'rgba(45, 156, 120, 0)');
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = gradient; ctx.fill();
-        });
-    }
-    function animate() { draw(); requestAnimationFrame(animate); }
-    window.addEventListener('resize', () => { resizeCanvas(); createParticles(); });
-    resizeCanvas(); createParticles(); animate();
-
     function openModal(modalId) {
         if (modalId === 'symptomModal') resetSymptomChecker();
         if (modalId === 'nutritionModal') resetNutritionTracker();
+        if (modalId === 'appointmentModal') resetAppointmentModal();
         
         const modal = document.getElementById(modalId);
         if(modal) {
@@ -1165,11 +1350,176 @@
             } catch (e) { console.error("Failed to parse nutrition JSON:", e); resultDiv.innerHTML = `<h4>Error</h4><p>The AI returned an invalid response. Please try again.</p>`; }
         } else { resultDiv.innerHTML = `<h4>Error</h4><p>Sorry, I was unable to get nutritional data. Please try again later.</p>`; }
     });
+
+    const dietPlanForm = document.getElementById('dietPlanForm');
+    dietPlanForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const disease = document.getElementById('diseaseSelect').value;
+        const resultDiv = document.getElementById('dietPlanResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `<p class="muted">Generating a sample diet plan for ${disease}... Please wait.</p>`;
+
+        const systemPrompt = `You are an expert nutritionist providing helpful, general advice. Create a sample one-day diet plan for the specified condition.
+        - The plan should be simple and easy to follow, with suggestions for breakfast, lunch, dinner, and snacks.
+        - DO NOT present this as a medical prescription.
+        - Start the response with a brief, one-sentence overview.
+        - CRITICAL: At the end, you MUST include this exact disclaimer, inside a separate paragraph: "<strong>Important Disclaimer:</strong> This is a sample diet plan and is not a substitute for professional medical advice. Consult with a doctor or registered dietitian before making any significant changes to your diet."`;
+
+        const userQuery = `Please provide a sample one-day diet plan for a person managing ${disease}.`;
+
+        const dietPlanText = await callGemini({
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] }
+        });
+
+        if (dietPlanText) {
+            const formattedText = dietPlanText.replace(/\n/g, '<br>');
+            resultDiv.innerHTML = `<div class="section-body">${formattedText}</div>`;
+        } else {
+            resultDiv.innerHTML = `<p>Sorry, I was unable to generate a diet plan at this time. Please try again later.</p>`;
+        }
+    });
+
     function resetNutritionTracker() {
-        if (!nutritionForm) return; nutritionForm.reset();
-        const resultDiv = document.getElementById('nutritionResult');
-        resultDiv.style.display = 'none'; resultDiv.innerHTML = '';
+        if (nutritionForm) {
+          nutritionForm.reset();
+          document.getElementById('nutritionResult').style.display = 'none';
+          document.getElementById('nutritionResult').innerHTML = '';
+        }
+        if (dietPlanForm) {
+            dietPlanForm.reset();
+            const dietResultDiv = document.getElementById('dietPlanResult');
+            dietResultDiv.style.display = 'none';
+            dietResultDiv.innerHTML = '';
+        }
     }
+
+    // --- Specialist Finder Logic ---
+    const specialists = {
+        "Dermatologist (Skin)": [
+            { name: "Dr. Anjali Sharma", location: "Mumbai, MH" },
+            { name: "Dr. Rohan Gupta", location: "Delhi, DL" },
+            { name: "Dr. Priya Desai", location: "Bangalore, KA" },
+        ],
+        "Cardiologist (Heart)": [
+            { name: "Dr. Vikram Singh", location: "Chennai, TN" },
+            { name: "Dr. Sunita Reddy", location: "Hyderabad, TS" },
+            { name: "Dr. Arjun Mehta", location: "Pune, MH" },
+        ],
+        "Gastroenterologist (Stomach)": [
+            { name: "Dr. Neha Patel", location: "Ahmedabad, GJ" },
+            { name: "Dr. Sameer Joshi", location: "Kolkata, WB" },
+        ],
+        "Neurologist (Brain & Nerves)": [
+            { name: "Dr. Kavita Rao", location: "Bangalore, KA" },
+            { name: "Dr. Manish Kumar", location: "Delhi, DL" },
+        ],
+        "Orthopedic (Bones & Joints)": [
+            { name: "Dr. Sanjay Verma", location: "Mumbai, MH" },
+            { name: "Dr. Divya Nair", location: "Kochi, KL" },
+        ],
+        "Pediatrician (Child)": [
+                { name: "Dr. Aisha Khan", location: "Lucknow, UP" },
+                { name: "Dr. Rajesh Menon", location: "Jaipur, RJ" },
+        ]
+    };
+
+    let currentSpecialty = null; // Keep track of the current specialty view
+
+    function renderSpecializations() {
+        const container = document.getElementById('specialistSelection');
+        container.innerHTML = '<div class="specialist-grid"></div>';
+        const grid = container.querySelector('.specialist-grid');
+        
+        for (const specialty in specialists) {
+            const item = document.createElement('div');
+            item.className = 'specialist-item';
+            item.textContent = specialty;
+            item.dataset.specialty = specialty;
+            item.addEventListener('click', () => {
+                currentSpecialty = specialty;
+                renderDoctors(specialty);
+            });
+            grid.appendChild(item);
+        }
+    }
+
+    function renderDoctors(specialty) {
+        document.getElementById('specialistSelection').style.display = 'none';
+        const container = document.getElementById('doctorListContainer');
+        container.style.display = 'block';
+
+        document.getElementById('doctorListTitle').textContent = `Showing Doctors for: ${specialty}`;
+        const list = document.getElementById('doctorList');
+        list.innerHTML = '';
+
+        const doctors = specialists[specialty];
+        doctors.forEach(doctor => {
+            const item = document.createElement('div');
+            item.className = 'doctor-list-item';
+            item.innerHTML = `
+                <div>
+                    <strong>${doctor.name}</strong>
+                    <p class="muted" style="margin:0;">${doctor.location}</p>
+                </div>
+                <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Check Availability</button>
+            `;
+            item.querySelector('button').addEventListener('click', () => {
+                showDoctorOnMap(doctor.name, doctor.location);
+            });
+            list.appendChild(item);
+        });
+    }
+    
+    function showDoctorOnMap(name, location) {
+        document.getElementById('doctorListContainer').style.display = 'none';
+        const container = document.getElementById('mapViewContainer');
+        container.style.display = 'block';
+
+        document.getElementById('mapViewTitle').textContent = `Location for ${name}`;
+        
+        const mapContainer = document.getElementById('mapContainer');
+        mapContainer.innerHTML = ''; // Clear previous map
+        const iframe = document.createElement('iframe');
+        iframe.width = "100%";
+        iframe.height = "300";
+        iframe.style.border = "0";
+        iframe.loading = "lazy";
+        iframe.allowFullscreen = true;
+        iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(location)}&output=embed`;
+        mapContainer.appendChild(iframe);
+
+        document.getElementById('bookVirtualConsultationBtn').onclick = () => {
+             const resultDiv = document.getElementById('appointmentResult');
+             resultDiv.innerHTML = `<strong>Success!</strong> Your virtual consultation with <strong>${name}</strong> has been booked. You will receive a confirmation shortly.`;
+             resultDiv.style.display = 'block';
+             container.style.display = 'none';
+        };
+    }
+    
+    document.getElementById('backToSpecialistsBtn').addEventListener('click', () => {
+        document.getElementById('doctorListContainer').style.display = 'none';
+        document.getElementById('appointmentResult').style.display = 'none';
+        document.getElementById('specialistSelection').style.display = 'block';
+    });
+    
+    document.getElementById('backToDoctorListBtn').addEventListener('click', () => {
+        document.getElementById('mapViewContainer').style.display = 'none';
+        if(currentSpecialty) {
+            renderDoctors(currentSpecialty); // Go back to the correct doctor list
+        }
+    });
+
+    function resetAppointmentModal() {
+        currentSpecialty = null;
+        renderSpecializations();
+        document.getElementById('doctorListContainer').style.display = 'none';
+        document.getElementById('specialistSelection').style.display = 'block';
+        document.getElementById('mapViewContainer').style.display = 'none';
+        document.getElementById('appointmentResult').style.display = 'none';
+        document.getElementById('appointmentResult').innerHTML = '';
+    }
+    // --- End of Specialist Finder Logic ---
 
     function showExplanation(title, content) {
         document.getElementById('explanationModalTitle').textContent = title;
@@ -1231,14 +1581,7 @@
       toast.textContent = message; toast.classList.add('show');
       setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
-    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const doctor = document.getElementById('doctorSelect').value;
-        const date = document.getElementById('datePicker').value;
-        const resultDiv = document.getElementById('appointmentResult');
-        resultDiv.innerHTML = `<strong>Success!</strong> Your appointment with ${doctor} on ${date} has been booked.`;
-        resultDiv.style.display = 'block'; this.reset();
-    });
+
     function updateVitals() {
         document.getElementById('heartRate').textContent = Math.floor(Math.random() * (90 - 60 + 1)) + 60;
         document.getElementById('bloodPressure').textContent = `${Math.floor(Math.random() * (125 - 110 + 1)) + 110}/${Math.floor(Math.random() * (85 - 75 + 1)) + 75}`;
@@ -1273,6 +1616,144 @@
             showToast(`Welcome, ${dummyUser.name}! Login Successful.`);
         } else { alert('Please enter both email and password.'); }
     });
+
+    // --- New Background Animation ---
+    const canvas = document.getElementById('background-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray;
+
+    // get mouse position
+    let mouse = {
+        x: null,
+        y: null,
+        radius: (canvas.height/100) * (canvas.width/100)
+    }
+
+    window.addEventListener('mousemove', function(event) {
+        mouse.x = event.x;
+        mouse.y = event.y;
+    });
+    window.addEventListener('mouseout', function() {
+        mouse.x = undefined;
+        mouse.y = undefined;
+    });
+
+
+    // create particle
+    class Particle {
+        constructor(x, y, directionX, directionY, size, color) {
+            this.x = x;
+            this.y = y;
+            this.directionX = directionX;
+            this.directionY = directionY;
+            this.size = size;
+            this.color = color;
+        }
+        // method to draw individual particle
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'rgba(45, 156, 120, 0.25)';
+            ctx.fill();
+        }
+        // check particle position, check mouse position, move the particle, draw the particle
+        update() {
+            // check if particle is still within canvas
+            if (this.x > canvas.width || this.x < 0) {
+                this.directionX = -this.directionX;
+            }
+            if (this.y > canvas.height || this.y < 0) {
+                this.directionY = -this.directionY;
+            }
+
+            // check collision detection - mouse position / particle position
+            if (mouse.x && mouse.y) {
+              let dx = mouse.x - this.x;
+              let dy = mouse.y - this.y;
+              let distance = Math.sqrt(dx*dx + dy*dy);
+              if (distance < mouse.radius + this.size){
+                  if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                      this.x += 3;
+                  }
+                  if (mouse.x > this.x && this.x > this.size * 10) {
+                      this.x -= 3;
+                  }
+                  if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                      this.y += 3;
+                  }
+                  if (mouse.y > this.y && this.y > this.size * 10) {
+                      this.y -= 3;
+                  }
+              }
+            }
+            // move particle
+            this.x += this.directionX;
+            this.y += this.directionY;
+            // draw particle
+            this.draw();
+        }
+    }
+
+    // create particle array
+    function init() {
+        particlesArray = [];
+        let numberOfParticles = (canvas.height * canvas.width) / 9000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            let size = (Math.random() * 2) + 1;
+            let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+            let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+            let directionX = (Math.random() * 0.4) - 0.2;
+            let directionY = (Math.random() * 0.4) - 0.2;
+            let color = 'rgba(45, 156, 120, 0.5)';
+
+            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+        }
+    }
+
+    // check if particles are close enough to draw line between them
+    function connect() {
+        let opacityValue = 1;
+        for (let a = 0; a < particlesArray.length; a++) {
+            for (let b = a; b < particlesArray.length; b++) {
+                let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                if (distance < (canvas.width/7) * (canvas.height/7)) {
+                    opacityValue = 1 - (distance/20000);
+                    ctx.strokeStyle = `rgba(45, 156, 120, ${opacityValue * 0.3})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    // animation loop
+    function animateBackground() {
+        requestAnimationFrame(animateBackground);
+        ctx.clearRect(0,0,innerWidth, innerHeight);
+
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+        }
+        connect();
+    }
+
+    // resize event
+    window.addEventListener('resize', function(){
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        mouse.radius = ((canvas.height/80) * (canvas.height/80));
+        init();
+    });
+
+    init();
+    animateBackground();
   </script>
 </body>
 </html>
