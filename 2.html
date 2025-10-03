@@ -13,7 +13,7 @@
       --primary-green: #2D9C78;
       --primary-green-dark: #247d60;
       --secondary-green-light: #EAF7F3;
-      --text-dark: #1a2e35;
+      --text-dark: #102a43;
       --text-light: #64748B;
       --card-bg: #FFFFFF;
       --border-color: #E2E8F0;
@@ -45,6 +45,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
+      transition: opacity 1s ease-out;
     }
 
     .container {
@@ -54,7 +55,7 @@
       position: relative;
       z-index: 2;
       opacity: 0; /* Initially hidden */
-      animation: fade-in-container 1s ease-out forwards 4.5s; /* Fade in after animation */
+      animation: fade-in-container 1s ease-out forwards 5s; /* Fade in after animation */
     }
     
     .navbar {
@@ -153,14 +154,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        animation: welcome-fade-out 1s ease-in forwards 4.5s;
+        animation: welcome-fade-out 1s ease-in forwards 5s;
         overflow: hidden;
     }
 
     .animation-bg {
         position: absolute;
         inset: 0;
-        background-image: url('https://images.unsplash.com/photo-1581091870622-9c3a3a41c657?q=80&w=2070&auto=format&fit=crop');
+        background-image: url('https://images.unsplash.com/photo-1579684385127-6ac10b805673?q=80&w=2070&auto=format&fit=crop');
         background-size: cover;
         background-position: center;
         transform: scale(1.2);
@@ -207,7 +208,7 @@
         transform: translateY(30px) scale(0.95);
         filter: blur(10px);
         animation: fade-in-up-text 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.5s;
-        text-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+        text-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .welcome-subtitle {
@@ -218,7 +219,7 @@
         opacity: 0;
         transform: translateY(30px);
         animation: fade-in-up-text 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards 2s;
-        text-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         max-width: 80%;
         text-align: center;
     }
@@ -277,6 +278,7 @@
       font-size: 1rem;
       font-weight: 400;
       line-height: 1.6;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
 
     .dashboard-layout {
@@ -313,7 +315,6 @@
     #pageHome .dashboard-layout .action-tile:nth-of-type(4) { animation-delay: 0.5s; }
     #pageHome .dashboard-layout .action-tile:nth-of-type(5) { animation-delay: 0.6s; }
     #pageHome .dashboard-layout .action-tile:nth-of-type(6) { animation-delay: 0.7s; }
-    #pageHome .dashboard-layout .action-tile:nth-of-type(7) { animation-delay: 0.8s; }
 
 
     .action-tile:hover {
@@ -391,6 +392,88 @@
       color: var(--primary-green-dark);
     }
 
+    /* Floating Chat Widget */
+    #floating-chat-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+    }
+    #chat-toggle-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-green);
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    #chat-toggle-btn:hover {
+      background: var(--primary-green-dark);
+      transform: scale(1.1);
+    }
+    #chat-toggle-btn svg {
+      width: 32px;
+      height: 32px;
+      stroke: white;
+    }
+    #chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 370px;
+      height: 500px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      visibility: hidden;
+    }
+    #chat-window.open {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+    .chat-header {
+      padding: 1rem;
+      background: var(--primary-green);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-header h3 { font-size: 1.1rem; }
+    .chat-header #close-chat-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .chat-header #close-chat-btn:hover {
+      opacity: 1;
+    }
+    #aiChatBox {
+      flex-grow: 1;
+      padding: 1rem;
+      background: var(--bg-light);
+    }
+    #aiChatForm {
+      padding: 1rem;
+      border-top: 1px solid var(--border-color);
+      background: var(--card-bg);
+    }
+    
     /* Other styles remain the same */
     .about-section, .login-section {
         background: var(--card-bg); padding: 2rem; border-radius: 12px;
@@ -539,37 +622,32 @@
         </div>
 
         <div class="dashboard-layout">
-          <div id="tile-checker" class="action-tile" onclick="openModal('symptomModal')">
+          <div id="tile-checker" class="action-tile">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 12c0-2.5-2-4.5-4.5-4.5S5.5 9.5 5.5 12s2 4.5 4.5 4.5S14.5 14.5 14.5 12z"/><path d="M12 18.5c-3.03 0-5.5-2.47-5.5-5.5 0-1.42.54-2.73 1.44-3.74"/></svg>
             <h3>AI Symptom Checker</h3>
             <p class="muted">Get a quick analysis of your symptoms.</p>
           </div>
-          <div id="tile-appointment" class="action-tile" onclick="openModal('appointmentModal')">
+          <div id="tile-appointment" class="action-tile">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               <h3>Book Appointment</h3>
               <p class="muted">Schedule a visit with a doctor.</p>
           </div>
-          <div id="tile-monitor" class="action-tile" onclick="openModal('monitorModal')">
+          <div id="tile-monitor" class="action-tile">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
               <h3>Health Monitor</h3>
               <p class="muted">Track your vital signs.</p>
           </div>
-          <div id="tile-meds" class="action-tile" onclick="openModal('medsModal')">
+          <div id="tile-meds" class="action-tile">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5"/><circle cx="17" cy="7" r="5"/><path d="M7 13h10"/><path d="M12 13v10"/></svg>
               <h3>Medications</h3>
               <p class="muted">View your prescription list.</p>
           </div>
-          <div id="tile-records" class="action-tile" onclick="openModal('recordsModal')">
+          <div id="tile-records" class="action-tile">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               <h3>Medical Records</h3>
               <p class="muted">Access your health history.</p>
           </div>
-          <div id="tile-chat" class="action-tile" onclick="openModal('chatModal')">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <h3>AI Health Chat</h3>
-              <p class="muted">Chat with an AI assistant.</p>
-          </div>
-          <div id="tile-nutrition" class="action-tile" onclick="openModal('nutritionModal')">
+          <div id="tile-nutrition" class="action-tile">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M15.32 10.32a3.5 3.5 0 0 0-4.64 0"/><path d="M15.32 10.32a3.5 3.5 0 0 1 0 4.64"/><path d="M8.68 14.96a3.5 3.5 0 0 1 0-4.64"/><path d="M8.68 14.96a3.5 3.5 0 0 0 4.64 0"/></svg>
             <h3>Nutrition Tracker</h3>
             <p class="muted">Analyze calories in your food.</p>
@@ -655,6 +733,23 @@
         </div>
       </div>
     </main>
+  </div>
+
+  <div id="floating-chat-container">
+    <div id="chat-window">
+        <div class="chat-header">
+            <h3>AI Health Chat</h3>
+            <button id="close-chat-btn">&times;</button>
+        </div>
+        <div class="chat-box" id="aiChatBox"></div>
+        <form id="aiChatForm" style="flex-direction: row; gap: 0.5rem;">
+            <input id="aiChatInput" type="text" placeholder="Type a message..." style="margin: 0; flex: 1;" required />
+            <button class="btn btn-primary" style="margin: 0;">Send</button>
+        </form>
+    </div>
+    <button id="chat-toggle-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
   </div>
 
   <!-- Modals and Script are unchanged -->
@@ -755,19 +850,7 @@
         </table>
     </div>
   </div>
-  <div id="chatModal" class="modal">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h3 class="modal-title">AI Health Chat</h3>
-              <button class="close-btn" onclick="closeModal()">&times;</button>
-          </div>
-          <div class="chat-box" id="aiChatBox"></div>
-          <form id="aiChatForm" style="flex-direction: row; gap: 0.5rem;">
-              <input id="aiChatInput" type="text" placeholder="Type a message..." style="margin: 0; flex: 1;" required />
-              <button class="btn btn-primary" style="margin: 0;">Send</button>
-          </form>
-      </div>
-  </div>
+
   <div id="explanationModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -822,7 +905,21 @@
     
     window.addEventListener('load', () => {
       const welcomeScreen = document.getElementById('welcome-animation');
-      setTimeout(() => { if (welcomeScreen) { welcomeScreen.style.display = 'none'; } }, 5000); 
+      setTimeout(() => { if (welcomeScreen) { welcomeScreen.style.display = 'none'; } }, 5500); 
+
+      const backgroundCanvas = document.getElementById('background-canvas');
+      setTimeout(() => {
+          if (backgroundCanvas) {
+              backgroundCanvas.style.opacity = '0';
+          }
+      }, 4500);
+
+      setTimeout(() => {
+          if (backgroundCanvas) {
+              backgroundCanvas.style.display = 'none';
+          }
+      }, 5500);
+
       updateUIForAuthState();
       getHealthTipOfTheDay();
     });
@@ -861,10 +958,7 @@
     function openModal(modalId) {
         if (modalId === 'symptomModal') resetSymptomChecker();
         if (modalId === 'nutritionModal') resetNutritionTracker();
-        if (modalId === 'chatModal') {
-            chatHistory = []; 
-            document.getElementById('aiChatBox').innerHTML = '<div class="chat-msg bot">Hello! I am your AI Health Buddy. How can I help you today? Remember, I am not a doctor and cannot give medical advice.</div>';
-        }
+        
         const modal = document.getElementById(modalId);
         if(modal) {
             currentModal = modal; modal.classList.add('active');
@@ -875,6 +969,34 @@
     function closeModal() { if(currentModal) { currentModal.classList.remove('active'); currentModal = null; } }
     window.addEventListener('click', (event) => { if (event.target.classList.contains('modal')) closeModal(); });
     
+    // Floating Chat Logic
+    const chatWindow = document.getElementById('chat-window');
+    const chatToggleBtn = document.getElementById('chat-toggle-btn');
+    const closeChatBtn = document.getElementById('close-chat-btn');
+    const chatTile = document.getElementById('tile-chat');
+
+    function toggleChatWidget(forceOpen = false) {
+      if(forceOpen) {
+        chatWindow.classList.add('open');
+      } else {
+        chatWindow.classList.toggle('open');
+      }
+      if(chatWindow.classList.contains('open') && chatHistory.length === 0) {
+        chatHistory = []; 
+        document.getElementById('aiChatBox').innerHTML = '<div class="chat-msg bot">Hello! I am your AI Health Buddy. How can I help you today? Remember, I am not a doctor and cannot give medical advice.</div>';
+      }
+    }
+
+    chatToggleBtn.addEventListener('click', () => toggleChatWidget());
+    closeChatBtn.addEventListener('click', () => toggleChatWidget());
+    if(chatTile) {
+      chatTile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleChatWidget(true)
+      });
+    }
+
+
     const pageLinks = {
       navHome: document.getElementById('pageHome'),
       navAbout: document.getElementById('pageAbout'),
