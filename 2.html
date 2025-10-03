@@ -235,7 +235,8 @@
         0%, 100% { transform: scale(1.2) rotate(1deg); }
         50% { transform: scale(1.1) rotate(-1deg); }
     }
-    @keyframes welcome-fade-out { to { opacity: 0; visibility: hidden; } }
+    /* FIXED: Added pointer-events: none to prevent the overlay from blocking clicks after it's hidden */
+    @keyframes welcome-fade-out { to { opacity: 0; visibility: hidden; pointer-events: none; } }
     @keyframes fade-in-up-text { to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
     @keyframes fade-in-container { to { opacity: 1; } }
     @keyframes fade-in-vignette { to { opacity: 1; } }
@@ -878,7 +879,7 @@
 
   <script>
     // All JavaScript remains the same.
-    const apiKey = "AIzaSyBOJ4dkvZoNYbvbGQm3ukVRd729Iik-_tA"; 
+    const apiKey = ""; // IMPORTANT: This will be populated by the environment.
     let currentModal = null;
     let chatHistory = [];
     let isChatbotTyping = false;
@@ -922,6 +923,14 @@
 
       updateUIForAuthState();
       getHealthTipOfTheDay();
+
+      // FIXED: Added event listeners for the dashboard tiles
+      document.getElementById('tile-checker').addEventListener('click', () => openModal('symptomModal'));
+      document.getElementById('tile-appointment').addEventListener('click', () => openModal('appointmentModal'));
+      document.getElementById('tile-monitor').addEventListener('click', () => openModal('monitorModal'));
+      document.getElementById('tile-meds').addEventListener('click', () => openModal('medsModal'));
+      document.getElementById('tile-records').addEventListener('click', () => openModal('recordsModal'));
+      document.getElementById('tile-nutrition').addEventListener('click', () => openModal('nutritionModal'));
     });
 
     const canvas = document.getElementById('background-canvas');
@@ -1042,6 +1051,7 @@
     }
 
     async function callGemini(payload) {
+        // FIXED: Removed the manual API key check that was causing errors.
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
         try {
             const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -1126,17 +1136,17 @@
         const generationConfig = {
             responseMimeType: "application/json",
             responseSchema: { type: "OBJECT", properties: {
-                    items: { type: "ARRAY", items: { type: "OBJECT", properties: {
-                                    food: { type: "STRING" }, calories: { type: "NUMBER" }, protein: { type: "NUMBER" },
-                                    carbs: { type: "NUMBER" }, fat: { type: "NUMBER" }
-                                }, required: ["food", "calories", "protein", "carbs", "fat"]
-                        }},
-                    totals: { type: "OBJECT", properties: {
-                                calories: { type: "NUMBER" }, protein: { type: "NUMBER" },
-                                carbs: { type: "NUMBER" }, fat: { type: "NUMBER" }
-                            }, required: ["calories", "protein", "carbs", "fat"]
-                        }}, required: ["items", "totals"]
-            }};
+                items: { type: "ARRAY", items: { type: "OBJECT", properties: {
+                        food: { type: "STRING" }, calories: { type: "NUMBER" }, protein: { type: "NUMBER" },
+                        carbs: { type: "NUMBER" }, fat: { type: "NUMBER" }
+                    }, required: ["food", "calories", "protein", "carbs", "fat"]
+                }},
+                totals: { type: "OBJECT", properties: {
+                        calories: { type: "NUMBER" }, protein: { type: "NUMBER" },
+                        carbs: { type: "NUMBER" }, fat: { type: "NUMBER" }
+                    }, required: ["calories", "protein", "carbs", "fat"]
+                }}, required: ["items", "totals"]
+        }};
         const analysisText = await callGemini({ contents: [{ parts: [{ text: userQuery }] }], systemInstruction: { parts: [{ text: systemPrompt }] }, generationConfig });
         if (analysisText) {
             try {
