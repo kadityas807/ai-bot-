@@ -235,7 +235,6 @@
         0%, 100% { transform: scale(1.2) rotate(1deg); }
         50% { transform: scale(1.1) rotate(-1deg); }
     }
-    /* FIXED: Added pointer-events: none to prevent the overlay from blocking clicks after it's hidden */
     @keyframes welcome-fade-out { to { opacity: 0; visibility: hidden; pointer-events: none; } }
     @keyframes fade-in-up-text { to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
     @keyframes fade-in-container { to { opacity: 1; } }
@@ -878,8 +877,7 @@
   <div id="toastNotification"></div>
 
   <script>
-    // All JavaScript remains the same.
-    const apiKey = ""; // IMPORTANT: This will be populated by the environment.
+    const apiKey = "AIzaSyBOJ4dkvZoNYbvbGQm3ukVRd729Iik-_tA"; 
     let currentModal = null;
     let chatHistory = [];
     let isChatbotTyping = false;
@@ -924,7 +922,6 @@
       updateUIForAuthState();
       getHealthTipOfTheDay();
 
-      // FIXED: Added event listeners for the dashboard tiles
       document.getElementById('tile-checker').addEventListener('click', () => openModal('symptomModal'));
       document.getElementById('tile-appointment').addEventListener('click', () => openModal('appointmentModal'));
       document.getElementById('tile-monitor').addEventListener('click', () => openModal('monitorModal'));
@@ -1051,7 +1048,10 @@
     }
 
     async function callGemini(payload) {
-        // FIXED: Removed the manual API key check that was causing errors.
+        if (!apiKey || apiKey === "PASTE_YOUR_API_KEY_HERE") {
+            console.error("API Key is missing. Please paste your API key into the 'apiKey' variable in the script.");
+            return "API Key not configured. Please add your API key in the script to enable AI features.";
+        }
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
         try {
             const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
